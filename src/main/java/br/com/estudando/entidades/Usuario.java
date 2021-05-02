@@ -9,14 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TB_usuario")
-public class Usuario  implements Serializable{
+@Table(name = "TB_usuario")
+public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	private String nome;
 	private String email;
 	private String phone;
@@ -26,7 +26,7 @@ public class Usuario  implements Serializable{
 
 	}
 
-	public Usuario(Integer id, String nome, String email, String phone, String password) {
+	public Usuario(Long id, String nome, String email, String phone, String password) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -35,11 +35,11 @@ public class Usuario  implements Serializable{
 		this.password = password;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
