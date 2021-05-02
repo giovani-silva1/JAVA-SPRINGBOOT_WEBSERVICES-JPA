@@ -1,11 +1,14 @@
 package br.com.estudando.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,8 +22,11 @@ public class Usuario implements Serializable {
 	private Long id;
 	private String nome;
 	private String email;
-	private String phone;
-	private String password;
+	private String telefone;
+	private String senha;
+
+	@OneToMany(mappedBy = "usuario")
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Usuario() {
 
@@ -31,8 +37,8 @@ public class Usuario implements Serializable {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.phone = phone;
-		this.password = password;
+		this.telefone = phone;
+		this.senha = password;
 	}
 
 	public Long getId() {
@@ -60,19 +66,23 @@ public class Usuario implements Serializable {
 	}
 
 	public String getPhone() {
-		return phone;
+		return telefone;
 	}
 
 	public void setPhone(String phone) {
-		this.phone = phone;
+		this.telefone = phone;
 	}
 
 	public String getPassword() {
-		return password;
+		return senha;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.senha = password;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
 	@Override
