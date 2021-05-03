@@ -56,7 +56,6 @@ public class ItemPedido implements Serializable {
 		this.id.setPedido(pedido);
 	}
 
-	
 	public Produto getProduto() {
 		return id.getProduto();
 	}
@@ -88,6 +87,10 @@ public class ItemPedido implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public double getSubtotal() {
+		return preco * quantidade;
 	}
 
 }

@@ -88,8 +88,6 @@ public class Pedido implements Serializable {
 	public Set<ItemPedido> getItens() {
 		return itens;
 	}
-	
-	
 
 	public Pagamento getPagamento() {
 		return pagamento;
@@ -122,6 +120,14 @@ public class Pedido implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Double getValorTotal() {
+		double soma = 0.0;
+		for (ItemPedido itemPedido : itens) {
+			soma += itemPedido.getSubtotal();
+		}
+		return soma;
 	}
 
 }
