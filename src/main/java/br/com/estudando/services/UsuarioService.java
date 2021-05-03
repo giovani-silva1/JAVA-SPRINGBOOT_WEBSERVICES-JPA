@@ -24,4 +24,8 @@ public class UsuarioService {
 		return usuarioEncontrario.get();
 
 	}
+
+	public Usuario criarUsuario(Usuario usuario) {
+		return usuarioRepository.save(usuario);
+	}
 }
