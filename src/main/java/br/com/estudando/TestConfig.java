@@ -11,10 +11,12 @@ import org.springframework.context.annotation.Profile;
 
 import br.com.estudando.entidades.Categoria;
 import br.com.estudando.entidades.Pedido;
+import br.com.estudando.entidades.Produto;
 import br.com.estudando.entidades.Usuario;
 import br.com.estudando.entidades.enums.StatusPedido;
 import br.com.estudando.repositorys.CategoriaRepository;
 import br.com.estudando.repositorys.PedidoRepository;
+import br.com.estudando.repositorys.ProdutoRepository;
 import br.com.estudando.repositorys.UsuarioRepository;
 
 @Configuration
@@ -29,6 +31,10 @@ public class TestConfig implements CommandLineRunner {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
+	
+	
+	@Autowired
+	private ProdutoRepository produtoRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -49,7 +55,16 @@ public class TestConfig implements CommandLineRunner {
 		Categoria categoria2 = new Categoria(null, "Livros");
 		Categoria categoria3 = new Categoria(null, "Computador");
 
+		Produto produto = new Produto(null, "PC GAMER","PC GAMER DELL LATITUDE 4400",6500.00,"");
+		Produto produto1 = new Produto(null, "LIVRO HARRY POTTER","LIVRO DO HARRY POTTER ESCRITORA XXX",900.00,"");
+		Produto produto2 = new Produto(null, "LIVRO MARLEY E EU","LIVRO DE UM ROMANCE ENTRE HUMANO E CACHORRO",500.00,"");
+		Produto produto3 = new Produto(null, "NOTEBOOK","NOTEBOOK ACER",8500.00,"");
+		Produto produto4 = new Produto(null, "MOUSE ","MOUSE DA MARCA RAZER",2500.00,"");
+		
 		categoriaRepository.saveAll(Arrays.asList(categoria, categoria2, categoria3));
+		produtoRepository.saveAll(Arrays.asList(produto,produto1,produto2,produto3,produto4));
+		
+		
 	}
 
 }
