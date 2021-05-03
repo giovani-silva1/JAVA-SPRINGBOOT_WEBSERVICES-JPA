@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import br.com.estudando.entidades.enums.StatusPedido;
 
 @Entity
 @Table(name = "TB_pedido")
@@ -24,6 +24,8 @@ public class Pedido implements Serializable {
 	private Long id;
 	private Instant data;
 
+	private Integer statusPedido;
+
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
@@ -32,10 +34,11 @@ public class Pedido implements Serializable {
 
 	}
 
-	public Pedido(Long id, Instant data, Usuario usuario) {
+	public Pedido(Long id, Instant data, StatusPedido statusPedido, Usuario usuario) {
 		super();
 		this.id = id;
 		this.data = data;
+		setStatusPedido(statusPedido);
 		this.usuario = usuario;
 	}
 
@@ -61,6 +64,14 @@ public class Pedido implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public StatusPedido getStatusPedido() {
+		return StatusPedido.transformarStatusPedidoPorCode(statusPedido);
+	}
+
+	public void setStatusPedido(StatusPedido statusPedido) {
+		this.statusPedido = statusPedido.getCode();
 	}
 
 	@Override

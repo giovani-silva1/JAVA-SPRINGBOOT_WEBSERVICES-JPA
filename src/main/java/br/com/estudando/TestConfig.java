@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 
 import br.com.estudando.entidades.Pedido;
 import br.com.estudando.entidades.Usuario;
+import br.com.estudando.entidades.enums.StatusPedido;
 import br.com.estudando.repositorys.PedidoRepository;
 import br.com.estudando.repositorys.UsuarioRepository;
 
@@ -32,10 +33,10 @@ public class TestConfig implements CommandLineRunner {
 
 		usuarioRepository.saveAll(Arrays.asList(a1, a2));
 
-		Pedido p1 = new Pedido(null, Instant.parse("2018-11-30T18:35:24.00Z"), a2);
-		Pedido p2 = new Pedido(null, Instant.parse("2016-11-30T18:40:24.00Z"), a2);
-		Pedido p3 = new Pedido(null, Instant.parse("2014-09-30T18:40:24.00Z"), a1);
-		Pedido p4 = new Pedido(null, Instant.parse("2014-05-30T18:40:24.00Z"), a1);
+		Pedido p1 = new Pedido(null, Instant.parse("2018-11-30T18:35:24.00Z"), StatusPedido.ENTREGUE, a2);
+		Pedido p2 = new Pedido(null, Instant.parse("2016-11-30T18:40:24.00Z"), StatusPedido.CANCELADO, a2);
+		Pedido p3 = new Pedido(null, Instant.parse("2014-09-30T18:40:24.00Z"), StatusPedido.ENVIADO, a1);
+		Pedido p4 = new Pedido(null, Instant.parse("2014-05-30T18:40:24.00Z"), StatusPedido.PAGO, a1);
 
 		pedidoRepository.saveAll(Arrays.asList(p1, p2, p3, p4));
 
