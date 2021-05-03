@@ -12,11 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -33,9 +35,11 @@ public class Produto implements Serializable {
 	private Double valor;
 	private String imgUrl;
 
-	
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItemPedido> itens = new HashSet<>();
+
 	@ManyToMany
-	@JoinTable(name="TB_produto_categoria",joinColumns = @JoinColumn(name="produto_id"),inverseJoinColumns = @JoinColumn(name="categoria_id"))
+	@JoinTable(name = "TB_produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private Set<Categoria> categorias = new HashSet<>();
 
 	public Produto() {
@@ -97,6 +101,15 @@ public class Produto implements Serializable {
 
 	public Set<Categoria> getCategorias() {
 		return categorias;
+	}
+
+	@JsonIgnore
+	public Set<Pedido> getPedido() {
+		Set<Pedido> pedidosEncontrados = new HashSet<>();
+		for (ItemPedido itemPedidoEncontrados : itens) {
+			pedidosEncontrados.add(itemPedidoEncontrados.getPedido());
+		}
+		return pedidosEncontrados;
 	}
 
 	@Override
