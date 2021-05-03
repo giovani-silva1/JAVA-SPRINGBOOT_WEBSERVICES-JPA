@@ -60,9 +60,25 @@ public class TestConfig implements CommandLineRunner {
 		Produto produto2 = new Produto(null, "LIVRO MARLEY E EU","LIVRO DE UM ROMANCE ENTRE HUMANO E CACHORRO",500.00,"");
 		Produto produto3 = new Produto(null, "NOTEBOOK","NOTEBOOK ACER",8500.00,"");
 		Produto produto4 = new Produto(null, "MOUSE ","MOUSE DA MARCA RAZER",2500.00,"");
+		Produto produto5 = new Produto(null, "SMARTTV ","SMART TV SAMSUNG ",2500.00,"");
 		
 		categoriaRepository.saveAll(Arrays.asList(categoria, categoria2, categoria3));
-		produtoRepository.saveAll(Arrays.asList(produto,produto1,produto2,produto3,produto4));
+		produtoRepository.saveAll(Arrays.asList(produto,produto1,produto2,produto3,produto4,produto5));
+		
+		//adicionando categorias em produtos.
+		produto.getCategorias().add(categoria);
+		produto.getCategorias().add(categoria3);
+		
+		produto1.getCategorias().add(categoria2);
+		produto2.getCategorias().add(categoria2);
+		produto3.getCategorias().add(categoria);
+		produto3.getCategorias().add(categoria3);
+		produto4.getCategorias().add(categoria);
+		produto4.getCategorias().add(categoria3);
+		produto5.getCategorias().add(categoria3);
+		
+		produtoRepository.saveAll(Arrays.asList(produto,produto1,produto2,produto3,produto4,produto5));
+		
 		
 		
 	}
