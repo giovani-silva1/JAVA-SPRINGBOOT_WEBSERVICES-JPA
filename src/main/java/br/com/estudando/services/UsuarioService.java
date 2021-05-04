@@ -3,11 +3,15 @@ package br.com.estudando.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import br.com.estudando.entidades.Usuario;
 import br.com.estudando.repositorys.UsuarioRepository;
+import br.com.estudando.services.exception.DatabaseConstraintException;
 import br.com.estudando.services.exception.RegistroNaoEncontradoException;
 
 @Service
@@ -31,7 +35,13 @@ public class UsuarioService {
 	}
 
 	public void deletarUsuario(Long id) {
-		usuarioRepository.deleteById(id);
+		try {
+			usuarioRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new RegistroNaoEncontradoException(id);
+		}catch ( DataIntegrityViolationException e) {
+			throw new DatabaseConstraintException(e.getMessage());
+		}
 	}
 
 	public Usuario atualizarUsuario(Long id, Usuario usuarioAtualizado) {

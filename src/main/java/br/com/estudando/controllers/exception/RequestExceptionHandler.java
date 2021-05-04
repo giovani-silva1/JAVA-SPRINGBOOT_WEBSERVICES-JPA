@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import br.com.estudando.services.exception.DatabaseConstraintException;
 import br.com.estudando.services.exception.RegistroNaoEncontradoException;
 
 @ControllerAdvice
@@ -18,6 +19,16 @@ public class RequestExceptionHandler {
 	public ResponseEntity<ResponseException> registroNaoEncontrado(RegistroNaoEncontradoException e, HttpServletRequest request){
 	String erro = "Registro não encontrado";
 	HttpStatus status = HttpStatus.NOT_FOUND;
+	ResponseException responseException = new ResponseException(Instant.now(),status.value(),erro,e.getMessage(),request.getRequestURI());
+	return ResponseEntity.status(status).body(responseException);
+	}
+	
+	
+	
+	@ExceptionHandler(DatabaseConstraintException.class)
+	public ResponseEntity<ResponseException> registroConstraint(DatabaseConstraintException e, HttpServletRequest request){
+	String erro = "Registro não pode ser excluido por ter relacionamento com outras tabelas.";
+	HttpStatus status = HttpStatus.BAD_REQUEST;
 	ResponseException responseException = new ResponseException(Instant.now(),status.value(),erro,e.getMessage(),request.getRequestURI());
 	return ResponseEntity.status(status).body(responseException);
 	}
