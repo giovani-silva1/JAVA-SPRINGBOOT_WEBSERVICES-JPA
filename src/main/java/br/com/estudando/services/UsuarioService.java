@@ -28,8 +28,24 @@ public class UsuarioService {
 	public Usuario criarUsuario(Usuario usuario) {
 		return usuarioRepository.save(usuario);
 	}
-	
+
 	public void deletarUsuario(Long id) {
 		usuarioRepository.deleteById(id);
 	}
+
+	public Usuario atualizarUsuario(Long id, Usuario usuarioAtualizado) {
+		Usuario usuario = usuarioRepository.getOne(id);
+		atualizarUsuario(usuario, usuarioAtualizado);
+		return usuarioRepository.save(usuario);
+
+	}
+
+	private void atualizarUsuario(Usuario usuario, Usuario usuarioAtualizado) {
+		usuario.setNome(usuarioAtualizado.getNome());
+		usuario.setEmail(usuarioAtualizado.getEmail());
+		usuario.setTelefone(usuarioAtualizado.getTelefone());
+		usuario.setSenha(usuarioAtualizado.getSenha());
+
+	}
+
 }
