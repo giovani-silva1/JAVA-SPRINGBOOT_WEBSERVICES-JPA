@@ -3,6 +3,8 @@ package br.com.estudando.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -39,15 +41,19 @@ public class UsuarioService {
 			usuarioRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new RegistroNaoEncontradoException(id);
-		}catch ( DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseConstraintException(e.getMessage());
 		}
 	}
 
 	public Usuario atualizarUsuario(Long id, Usuario usuarioAtualizado) {
-		Usuario usuario = usuarioRepository.getOne(id);
-		atualizarUsuario(usuario, usuarioAtualizado);
-		return usuarioRepository.save(usuario);
+		try {
+			Usuario usuario = usuarioRepository.getOne(id);
+			atualizarUsuario(usuario, usuarioAtualizado);
+			return usuarioRepository.save(usuario);
+		} catch (EntityNotFoundException e) {
+			throw new RegistroNaoEncontradoException(id);
+		}
 
 	}
 
