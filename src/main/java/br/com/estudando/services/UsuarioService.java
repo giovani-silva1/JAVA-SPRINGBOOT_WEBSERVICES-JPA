@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.estudando.entidades.Usuario;
 import br.com.estudando.repositorys.UsuarioRepository;
+import br.com.estudando.services.exception.RegistroNaoEncontradoException;
 
 @Service
 public class UsuarioService {
@@ -21,7 +22,7 @@ public class UsuarioService {
 
 	public Usuario encontrarUsuarioPorId(Long id) {
 		Optional<Usuario> usuarioEncontrario = usuarioRepository.findById(id);
-		return usuarioEncontrario.get();
+		return usuarioEncontrario.orElseThrow(() -> new RegistroNaoEncontradoException(id));
 
 	}
 
